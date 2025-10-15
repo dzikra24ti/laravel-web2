@@ -46,5 +46,8 @@ Route::get('/home', [HomeController::class, 'index']);
 
 Route::post('question/store', [QuestionController::class, 'store'])
 		->name('question.store');
+<<<<<<< HEAD
+=======
 
 Route::get('/pegawai', [PegawaiController::class, 'index']);
+>>>>>>> 98be3942da6d5ec130240cf0e7f0bd0843a1dd3a
