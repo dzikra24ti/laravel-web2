@@ -12,6 +12,8 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\QuestionController;
 
+use App\Http\Controllers\DashboardController;
+
 Route::get('/', function () {
     return view ('welcome');
 });
@@ -32,8 +34,6 @@ Route::get('/nim/{param1?}', function ($param1 = '') {
     return 'Nim saya : '.$param1;
 });
 
-Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);
-
 Route::get('/about', function () {
     return view('halaman-about');
 });
@@ -46,8 +46,10 @@ Route::get('/home', [HomeController::class, 'index']);
 
 Route::post('question/store', [QuestionController::class, 'store'])
 		->name('question.store');
-<<<<<<< HEAD
-=======
 
 Route::get('/pegawai', [PegawaiController::class, 'index']);
->>>>>>> 98be3942da6d5ec130240cf0e7f0bd0843a1dd3a
+
+Route::get('dashboard',[DashboardController::class , 'index'])
+        ->name('dashboard');
+
+
