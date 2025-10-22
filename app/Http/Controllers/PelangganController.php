@@ -8,87 +8,66 @@ use App\Models\Pelanggan;
 class PelangganController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Validasi dasar untuk store() dan update()
      */
-public function index(){
-		$data['dataPelanggan'] = Pelanggan::all();
-		return view('admin.pelanggan.index',$data);
-}
+    protected $validationRules = [
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'birthday' => 'required|date',
+        'gender' => 'required|in:Male,Female',
+        'email' => 'required|email|unique:pelanggan,email',
+        'phone' => 'required|numeric',
+    ];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-public function create(){
-		return view('admin.pelanggan.create');
-}
+    public function index()
+    {
+        $data['dataPelanggan'] = Pelanggan::all();
+        return view('admin.pelanggan.index', $data);
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function create()
+    {
+        return view('admin.pelanggan.create');
+    }
+
     public function store(Request $request)
     {
-       // dd($request->all());
-        $data['first_name'] = $request->first_name;
-		$data['last_name'] = $request->last_name;
-		$data['birthday'] = $request->birthday;
-		$data['gender'] = $request->gender;
-		$data['email'] = $request->email;
-		$data['phone'] = $request->phone;
+        // Validasi input sesuai aturan
+        $validatedData = $request->validate($this->validationRules);
 
-		Pelanggan::create($data);
+        // Simpan ke database
+        Pelanggan::create($validatedData);
 
-		return redirect()->route('pelanggan.index')->with('success','Penambahan Data Berhasil!');
-
+        // Redirect dengan pesan sukses
+        return redirect()->route('pelanggan.index')->with('success', 'Penambahan Data Berhasil!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $data['dataPelanggan'] = Pelanggan::findOrFail($id);
+        return view('admin.pelanggan.edit', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-public function edit(string $id)
-{
-    $data['dataPelanggan'] = Pelanggan::findOrFail($id);
-    return view('admin.pelanggan.edit', $data);
-}
-
-    /**
-     * Update the specified resource in storage.
-     */
-public function update(Request $request, string $id)
-{
-    // Menggunakan $id yang diterima dari rute
-    $pelanggan_id = $id;
-
-    // Mencari data Pelanggan berdasarkan ID atau menghentikan eksekusi jika tidak ditemukan
-    $pelanggan = Pelanggan::findOrFail($pelanggan_id);
-
-    // Memperbarui properti model Pelanggan dengan data dari request (form)
-    $pelanggan->first_name = $request->first_name;
-    $pelanggan->last_name = $request->last_name;
-    $pelanggan->birthday = $request->birthday;
-    $pelanggan->gender = $request->gender;
-    $pelanggan->email = $request->email;
-    $pelanggan->phone = $request->phone;
-
-    // Menyimpan perubahan ke database
-    $pelanggan->save();
-
-    // Mengarahkan kembali ke halaman index dengan pesan sukses
-    return redirect()->route('pelanggan.index')->with('success', 'Perubahan Data Berhasil!');
-}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi dengan pengecualian unique email untuk data ini
+        $rules = $this->validationRules;
+        $rules['email'] = 'required|email|unique:pelanggan,email,' . $id . ',pelanggan_id';
+
+        $validatedData = $request->validate($rules);
+
+        // Update data
+        $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan->update($validatedData);
+
+        return redirect()->route('pelanggan.index')->with('success', 'Perubahan Data Berhasil!');
+    }
+
+    public function destroy($id)
+    {
+        $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan->delete();
+
+        return redirect()->route('pelanggan.index')->with('success', 'Data berhasil dihapus!');
     }
 }
