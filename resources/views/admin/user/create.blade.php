@@ -1,5 +1,4 @@
 @extends('admin.layout.app')
-@section('title','Tambah Pelanggan')
 @section('content')
 
 <div class="py-4">
@@ -14,17 +13,17 @@
                     </svg>
                 </a>
             </li>
-            <li class="breadcrumb-item"><a href="{{ route('pelanggan.index') }}">Pelanggan</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tambah Pelanggan</li>
+            <li class="breadcrumb-item"><a href="{{ route('user.index') }}">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
         </ol>
     </nav>
     <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
-            <h1 class="h4">Tambah Pelanggan</h1>
-            <p class="mb-0">Form untuk menambahkan data pelanggan baru.</p>
+            <h1 class="h4">Tambah User</h1>
+            <p class="mb-0">Form untuk menambahkan data User baru.</p>
         </div>
         <div>
-            <a href="{{ route('pelanggan.index') }}" class="btn btn-primary">
+            <a href="{{ route('user.index') }}" class="btn btn-primary">
                 <i class="fa fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
@@ -48,67 +47,34 @@
                     </div>
                 @endif
 
-                <form action="{{ route('pelanggan.store') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST">
                     @csrf
 
                     <div class="row mb-4">
                         <div class="col-lg-4 col-sm-6">
-                            <!-- First Name -->
+                            <!-- Name -->
                             <div class="mb-3">
-                                <label for="first_name" class="form-label">First Name</label>
+                                <label for="name" class="form-label">Name</label>
                                 <input type="text"
-                                       id="first_name"
-                                       name="first_name"
-                                       class="form-control @error('first_name') is-invalid @enderror"
-                                       value="{{ old('first_name') }}"
+                                       id="name"
+                                       name="name"
+                                       class="form-control @error('name') is-invalid @enderror"
+                                       value="{{ old('name') }}"
                                        required>
-                                @error('first_name')
+                                @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Last Name -->
+                                                        <!-- Password -->
                             <div class="mb-3">
-                                <label for="last_name" class="form-label">Last Name</label>
+                                <label for="password" class="form-label">Password</label>
                                 <input type="text"
-                                       id="last_name"
-                                       name="last_name"
-                                       class="form-control @error('last_name') is-invalid @enderror"
-                                       value="{{ old('last_name') }}"
+                                       id="password"
+                                       name="password"
+                                       class="form-control @error('password') is-invalid @enderror"
+                                       value="{{ old('password') }}"
                                        required>
-                                @error('last_name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-sm-6">
-                            <!-- Birthday -->
-                            <div class="mb-3">
-                                <label for="birthday" class="form-label">Birthday</label>
-                                <input type="date"
-                                       id="birthday"
-                                       name="birthday"
-                                       class="form-control @error('birthday') is-invalid @enderror"
-                                       value="{{ old('birthday') }}"
-                                       required>
-                                @error('birthday')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Gender -->
-                            <div class="mb-3">
-                                <label for="gender" class="form-label">Gender</label>
-                                <select id="gender"
-                                        name="gender"
-                                        class="form-select @error('gender') is-invalid @enderror"
-                                        required>
-                                    <option value="">-- Pilih --</option>
-                                    <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-                                    <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
-                                </select>
-                                @error('gender')
+                                @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -129,16 +95,16 @@
                                 @enderror
                             </div>
 
-                            <!-- Phone -->
+                                     <!-- Password -->
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Phone</label>
+                                <label for="password_confirmation" class="form-label">Password Confirmation</label>
                                 <input type="text"
-                                       id="phone"
-                                       name="phone"
-                                       class="form-control @error('phone') is-invalid @enderror"
-                                       value="{{ old('phone') }}"
+                                       id="password_confirmation"
+                                       name="password_confirmation"
+                                       class="form-control @error('password_confirmation') is-invalid @enderror"
+                                       value="{{ old('password_confirmation')}}"
                                        required>
-                                @error('phone')
+                                @error('password_confirmation')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -146,7 +112,7 @@
                             <!-- Buttons -->
                             <div class="">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a href="{{ route('pelanggan.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
+                                <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
                             </div>
                         </div>
                     </div>
