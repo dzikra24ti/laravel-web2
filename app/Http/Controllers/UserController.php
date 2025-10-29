@@ -66,8 +66,6 @@ public function update(Request $request, string $id)
     return redirect()->route('user.index')->with('success', 'Perubahan Data Berhasil!');
 }
 
-
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);

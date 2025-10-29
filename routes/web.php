@@ -16,6 +16,10 @@ use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\PelangganController;
 
+use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\UserController;
+
 Route::get('/', function () {
     return view ('welcome');
 });
@@ -61,3 +65,11 @@ Route::resource('pelanggan', App\Http\Controllers\PelangganController::class);
 
 
 Route::resource('user', App\Http\Controllers\UserController::class);
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+Route::resource('/user', UserController::class);
