@@ -26,6 +26,11 @@
 </head>
 
 <body>
+
+@include('admin.layout.sidebar')
+
+    <main class="content">
+
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="../../index.html">
             <img class="navbar-brand-dark" src="{{ asset('assets-admin/img/brand/light.svg') }}" alt="Volt logo" /> <img
@@ -40,17 +45,10 @@
         </div>
     </nav>
 
-<!-- Sidebar -->
-    @include('admin.layout.sidebar')
-
-    <main class="content">
-        <!-- Header -->
         @include('admin.layout.header')
 
-        <!-- Content -->
         @yield('content')
 
-        <!-- Footer -->
         @include('admin.layout.footer')
     </main>
 
