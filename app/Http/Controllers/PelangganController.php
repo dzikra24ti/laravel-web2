@@ -32,7 +32,7 @@ class PelangganController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input sesuai aturan
+      // Validasi input sesuai aturan
         $validatedData = $request->validate($this->validationRules);
 
         // Simpan ke database

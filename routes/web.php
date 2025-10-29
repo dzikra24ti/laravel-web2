@@ -54,10 +54,10 @@ Route::get('/pegawai', [PegawaiController::class, 'index']);
 Route::get('dashboard',[DashboardController::class , 'index'])
         ->name('dashboard');
 
-Route::resource('pelanggan', PelangganController::class);
+
 
 Route::resource('pelanggan', App\Http\Controllers\PelangganController::class);
 
-Route::resource('user', UserController::class);
+
 
 Route::resource('user', App\Http\Controllers\UserController::class);

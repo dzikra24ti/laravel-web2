@@ -47,7 +47,7 @@
         <div class="col-12 mb-4">
             <div class="card border-0 shadow components-section">
                 <div class="card-body">
-                    <form action="{{ route('user.update', $dataPelanggan->pelanggan_id) }}" method="POST">
+                    <form action="{{ route('user.update', $dataUser->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -59,10 +59,10 @@
                                 <input type="text"
                                        id="name"
                                        name="name"
-                                       class="form-control @error('first_name') is-invalid @enderror"
-                                       value="{{ old('name') }}"
+                                       class="form-control @error('name') is-invalid @enderror"
+                                       value="{{ old('name',$dataUser->name) }}"
                                        required>
-                                @error('first_name')
+                                @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -89,7 +89,7 @@
                                        id="email"
                                        name="email"
                                        class="form-control @error('email') is-invalid @enderror"
-                                       value="{{ old('email') }}"
+                                       value="{{ old('email', $dataUser->email) }}"
                                        required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -98,10 +98,10 @@
 
                                      <!-- Password -->
                             <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Password Confrmation</label>
+                                <label for="password_confirmation" class="form-label">Password Confirmation</label>
                                 <input type="text"
                                        id="password_confirmation"
-                                       name="password_confirmatio"
+                                       name="password_confirmation"
                                        class="form-control @error('password_confirmation') is-invalid @enderror"
                                        value="{{ old('password') }}"
                                        required>
@@ -113,7 +113,7 @@
                                 {{-- Buttons --}}
                                 <div class="mt-4">
                                     <button type="submit" class="btn btn-info">Simpan Perubahan</button>
-                                    <a href="{{ route('pelanggan.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
+                                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
                                 </div>
                             </div>
                         </div>

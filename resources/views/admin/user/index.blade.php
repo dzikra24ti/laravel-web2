@@ -57,10 +57,10 @@
                                 <tbody>
                                     @foreach ($dataUser as $item)
                                         <tr>
-                                            <td>{{ $item->first_name }}</td>
+                                            <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->password}}</td>
-                                            <td><a href="{{ route('user.edit', $item->user_id) }}"
+                                            <td><a href="{{ route('user.edit', $item->id) }}"
                                                     class="btn btn-info btn-sm">
                                                     <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
                                                         stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
@@ -71,7 +71,7 @@
                                                     </svg>
                                                     Edit
                                                 </a>
-                                                <form action="{{ route('user.destroy', $item->user_id) }}"
+                                                <form action="{{ route('user.destroy', $item->id) }}"
                                                     method="POST" style="display:inline">
                                                     @csrf
                                                     @method('DELETE')
