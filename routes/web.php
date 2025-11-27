@@ -20,6 +20,10 @@ use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\MultipleuploadsController;
+
+use App\Http\Controllers\Controller;
+
 Route::get('/', function () {
     return view ('welcome');
 });
@@ -73,3 +77,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
 Route::resource('/user', UserController::class);
+
+Route::get('/multipleuploads', 'MultipleuploadsController@index')->name('uploads');
+Route::post('/save','MultipleuploadsController@store')->name('uploads.store');
