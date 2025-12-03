@@ -37,3 +37,4 @@ class RoleSeeder extends Seeder
         $user->assignRole($roleUser); // <--- Kasih jabatan User
     }
 }
+

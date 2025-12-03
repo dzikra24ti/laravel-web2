@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    
+
     // Show the edit profile form
     public function edit()
     {
@@ -22,7 +22,7 @@ class ProfileController extends Controller
         $request->validate([
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+        
         $user = Auth::user();
 
         // Delete the old profile picture if it exists

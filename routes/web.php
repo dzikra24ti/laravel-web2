@@ -121,3 +121,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('pelanggan', PelangganController::class);
     });
 });
+
+
+Route::get('/multipleuploads', [MultipleuploadsController::class, 'index'])->name('uploads');
+Route::post('/save',[MultipleuploadsController::class, 'store'])->name('uploads.store');
