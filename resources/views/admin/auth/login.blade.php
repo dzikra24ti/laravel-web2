@@ -1,36 +1,49 @@
-@extends('admin.layout.app')
+<!DOCTYPE html>
+<html lang="id">
 
-@section('content')
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <h3 class="mb-4 text-center">Login</h3>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Login Sistem</h2>
 
-            <form method="POST" action="{{ route('login.process') }}">
-                @csrf
-                <div class="mb-3">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-                </div>
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form action="{{ route('login.process') }}" method="POST">
+            @csrf
 
-                <div class="mb-3">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" id="email" name="email"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="admin@gmail.com" required value="{{ old('email') }}">
+            </div>
 
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
-        </div>
+            <div class="mb-6">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input type="password" id="password" name="password"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="********" required>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+                Masuk
+            </button>
+        </form>
     </div>
-</div>
-@endsection
+</body>
+
+</html>

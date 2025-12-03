@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -17,30 +16,24 @@ class AuthController extends Controller
     // Proses login
     public function login(Request $request)
     {
-        // Validasi input
-        $request->validate([
+        $input = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        // Cek apakah email terdaftar
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return back()->withErrors(['email' => 'Email tidak ditemukan'])->withInput();
+        // 2. Percobaan otentikasi
+        if (Auth::attempt($input)) {
+            // Login Berhasil
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard'); // Arahkan ke /dashboard (atau tujuan yang dimaksud)
         }
 
-        // Cek password menggunakan Hash::check
-        if (Hash::check($request->password, $user->password)) {
-            // Simpan sesi login
-            session(['login_user' => $user->id]);
-
-            // Arahkan ke dashboard
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
-        } else {
-            return back()->withErrors(['password' => 'Password salah'])->withInput();
-        }
+        // 3. Login Gagal
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ]);
     }
+
 
     // Halaman dashboard
     public function dashboard()
@@ -52,5 +45,20 @@ class AuthController extends Controller
 
         $user = \App\Models\User::find(session('login_user'));
         return view('admin.dashboard', compact('user'));
+    }
+
+    public function logout(Request $request)
+    {
+        // 1. Hapus otentikasi
+        Auth::logout();
+
+        // 2. Invalidasi sesi
+        $request->session()->invalidate();
+
+        // 3. Regenerasi token CSRF
+        $request->session()->regenerateToken();
+
+        // 4. Arahkan ke halaman utama
+        return redirect('/');
     }
 }

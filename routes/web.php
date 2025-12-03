@@ -24,6 +24,8 @@ use App\Http\Controllers\MultipleuploadsController;
 
 use App\Http\Controllers\Controller;
 
+
+
 Route::get('/', function () {
     return view ('welcome');
 });
@@ -80,3 +82,42 @@ Route::resource('/user', UserController::class);
 
 Route::get('/multipleuploads', 'MultipleuploadsController@index')->name('uploads');
 Route::post('/save','MultipleuploadsController@store')->name('uploads.store');
+
+
+Route::middleware('guest')->group(function () {
+    // Halaman Form Login
+    Route::get('/auth', [AuthController::class, 'index'])->name('login');
+
+    // Proses Submit Login
+    Route::post('/auth/login', [AuthController::class, 'login'])->name('login.process');
+
+    // Halaman Depan/Landing Page
+    Route::get('/', function () {
+        return view('welcome');
+    });
+});
+
+Route::middleware('auth')->group(function () {
+    // Logout (Dapat diakses oleh semua user yang sudah login)
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // --- Rute User Biasa ---
+
+    // Halaman Dashboard Utama
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Contoh Fitur User Biasa (e.g., Kirim Pertanyaan)
+    Route::post('question/store', [QuestionController::class, 'store'])->name('question.store');
+
+    // Rute /home (Mungkin diarahkan ke Dashboard/Landing Page user login)
+    Route::get('/home', [HomeController::class, 'index']);
+
+    // Rute yang dilindungi oleh Middleware 'role:admin'
+    Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+        // CRUD User (admin/user/*)
+        Route::resource('user', UserController::class);
+
+        // CRUD Pelanggan (admin/pelanggan/*)
+        Route::resource('pelanggan', PelangganController::class);
+    });
+});
